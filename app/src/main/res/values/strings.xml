@@ -6,4 +6,6 @@
     <string name="btn_watch_later">Посмотреть позже</string>
     <string name="btn_compilation">Подборки</string>
     <string name="btn_setting">Настройки</string>
+    <string name="page_title">Search it!</string>
+    <string name="btn_dark_mode">Ночной режим</string>
 </resources>
