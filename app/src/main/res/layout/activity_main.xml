@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:background="@drawable/corner_background"
     tools:context=".MainActivity">
 
@@ -12,14 +11,16 @@
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
             app:title="@string/page_title"
             app:navigationIcon="@drawable/ic_round_menu"
+            android:layout_gravity="center_vertical"
             app:menu="@menu/toolbar"
             style="@style/Widget.MaterialComponents.Toolbar.Primary" />
 
@@ -29,10 +30,10 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/headMenu"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin="10dp"
-        android:elevation="5dp"
-        app:cardCornerRadius="15dp"
+        android:layout_height="@dimen/cardViewHeight"
+        android:layout_margin="@dimen/layOutMargin"
+        android:elevation="@dimen/elevation"
+        app:cardCornerRadius="@dimen/cornerRadius"
         app:layout_constraintTop_toBottomOf="@+id/app_bar_layout">
 
         <LinearLayout
@@ -82,16 +83,17 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:minHeight="@dimen/minTouchTarget"
+        android:layout_margin="@dimen/layOutMargin"
         android:autoLink="web"
         android:linksClickable="true"
-        android:minHeight="48dp"
         android:text="@string/movie_posters"
-        android:textColor="?colorOnBackground"
+        android:textColor="?colorOnPrimaryContainer"
         android:textColorLink="?colorOnPrimary"
-        android:textSize="15sp"
+        android:textSize="@dimen/textSize"
+        android:gravity="center|top"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headMenu" />
