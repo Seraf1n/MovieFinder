@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="cardViewHeight">120dp</dimen>
+    <dimen name="cardViewHeight">100dp</dimen>
     <dimen name="layOutMargin">8dp</dimen>
     <dimen name="cornerRadius">24dp</dimen>
     <dimen name="elevation">8dp</dimen>
     <dimen name="textSize">12sp</dimen>
     <dimen name="minTouchTarget">48dp</dimen>
+    <dimen name="poster_width">150dp</dimen>
+    <dimen name="poster_height">200dp</dimen>
 
 </resources>
