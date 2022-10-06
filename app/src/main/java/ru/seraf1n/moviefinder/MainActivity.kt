@@ -1,6 +1,9 @@
 package ru.seraf1n.moviefinder
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.view.View
+import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -11,19 +14,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initMenuButtons()
+
     }
+
 
     private fun initMenuButtons() {
         topAppBar.setOnMenuItemClickListener {
-            when(it.itemId){
-                R.id.settings ->{
+            when (it.itemId) {
+                R.id.settings -> {
                     Toast.makeText(this, "${it.title}", Toast.LENGTH_SHORT).show()
                     true
                 }
-                R.id.nightMode ->{
+                R.id.nightMode -> {
                     if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    }else {
+                    } else {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                     }
                     true
@@ -50,5 +55,14 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+    }
+
+    fun postersOnClickListeners(view: View) {
+
+        val anim = ObjectAnimator.ofFloat(view, View.ROTATION_Y, 0F, 360f)
+        anim.duration = 1500
+        anim.interpolator = DecelerateInterpolator()
+        anim.start()
+
     }
 }

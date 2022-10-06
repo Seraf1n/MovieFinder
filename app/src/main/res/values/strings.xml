@@ -8,4 +8,6 @@
     <string name="btn_setting">Настройки</string>
     <string name="page_title">Search it!</string>
     <string name="btn_dark_mode">Ночной режим</string>
+    <string name="content_description">Poster</string>
+
 </resources>
