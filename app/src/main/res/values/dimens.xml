@@ -5,8 +5,15 @@
     <dimen name="cornerRadius">24dp</dimen>
     <dimen name="elevation">8dp</dimen>
     <dimen name="textSize">12sp</dimen>
-    <dimen name="minTouchTarget">48dp</dimen>
+    <dimen name="minTouchTarget">36dp</dimen>
     <dimen name="poster_width">150dp</dimen>
     <dimen name="poster_height">200dp</dimen>
+    <dimen name="zero_dp">0dp</dimen>
+    <dimen name="collapsing_toolbar_height">0dp</dimen>
+    <dimen name="app_bar_layout_height">200dp</dimen>
+    <dimen name="image_view_width">150dp</dimen>
+    <dimen name="text_view_padding">8dp</dimen>
+    <dimen name="card_view_margin">4dp</dimen>
+
 
 </resources>
