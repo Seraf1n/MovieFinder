@@ -114,12 +114,11 @@ class MainActivity : AppCompatActivity() {
 
             when (it.itemId) {
                 R.id.favorites -> {
-                    Snackbar.make(
-                        this,
-                        findViewById(R.id.fab),
-                        "${it.title}",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.fragment_placeholder, FavoritesFragment())
+                        .addToBackStack(null)
+                        .commit()
                     true
                 }
                 R.id.watch_later -> {
