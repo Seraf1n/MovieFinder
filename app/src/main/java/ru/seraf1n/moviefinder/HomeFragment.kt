@@ -3,11 +3,6 @@ package ru.seraf1n.moviefinder
 import android.content.res.Resources
 import android.graphics.Rect
 import android.os.Bundle
-import android.transition.Scene
-import android.transition.Slide
-import android.transition.TransitionManager
-import android.transition.TransitionSet
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +10,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.merge_home_screen_content.view.*
 import ru.seraf1n.moviefinder.databinding.FragmentHomeBinding
 import java.util.*
 
@@ -25,11 +18,6 @@ class HomeFragment : Fragment() {
     private lateinit var filmsDataBase: List<Film>
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-
-    init {
-        exitTransition = Slide(Gravity.START).apply { duration = 800;mode = Slide.MODE_OUT }
-        reenterTransition = Slide(Gravity.START).apply { duration = 800; mode = Slide.MODE_IN }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,36 +31,15 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        AnimationHelper.performFragmentCircularRevealAnimation(binding.homeFragmentRoot, requireActivity(), 1)
+        initRecyclerView()
 
-        val scene = Scene.getSceneForLayout(
-            home_fragment_root,
-            R.layout.merge_home_screen_content,
-            requireContext()
-        )
-        //Создаем анимацию выезда поля поиска сверху
-        val searchSlide = Slide(Gravity.TOP).addTarget(R.id.search_view)
-        //Создаем анимацию выезда RV снизу
-        val recyclerSlide = Slide(Gravity.BOTTOM).addTarget(R.id.main_recycler)
-        //Создаем экземпляр TransitionSet, который объединит все наши анимации
-        val customTransition = TransitionSet().apply {
-            //Устанавливаем время, за которое будет проходить анимация
-            duration = 500
-            //Добавляем сами анимации
-            addTransition(recyclerSlide)
-            addTransition(searchSlide)
-        }
-        //Также запускаем через TransitionManager, но вторым параметром передаем нашу кастомную анимацию
-        TransitionManager.go(scene, customTransition)
-
-
-        initRecyclerView(scene)
-
-        scene.sceneRoot.search_view.setOnClickListener {
-            scene.sceneRoot.search_view.isIconified = false
+        binding.searchView.setOnClickListener {
+            binding.searchView.isIconified = false
         }
 
         //Подключаем слушателя изменений введенного текста в поиска
-        scene.sceneRoot.search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             //Этот метод отрабатывает при нажатии кнопки "поиск" на софт клавиатуре
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return true
@@ -98,9 +65,9 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private fun initRecyclerView(scene: Scene) {
+    private fun initRecyclerView() {
         //находим наш RV
-        scene.sceneRoot.main_recycler.apply {
+        binding.mainRecycler.apply {
             //Инициализируем наш адаптер в конструктор передаем анонимно инициализированный интерфейс,
             //оставим его пока пустым, он нам понадобится во второй части задания
             filmsAdapter =

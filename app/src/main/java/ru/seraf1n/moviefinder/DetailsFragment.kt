@@ -2,8 +2,6 @@ package ru.seraf1n.moviefinder
 
 import android.content.Intent
 import android.os.Bundle
-import android.transition.Slide
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +14,6 @@ class DetailsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var film: Film
 
-    init {
-        enterTransition = Slide(Gravity.END).apply { duration = 800 }
-        returnTransition = Slide(Gravity.END).apply { duration = 800;mode = Slide.MODE_OUT }
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,7 +25,11 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        AnimationHelper.performFragmentCircularRevealAnimation(
+            binding.fragmentDetails,
+            requireActivity(),
+            1
+        )
         initMovieDetails()
         initButton()
     }
