@@ -22,6 +22,11 @@ class WatchLaterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        AnimationHelper.performFragmentCircularRevealAnimation(binding.watchLater, requireActivity(), 1)
+        AnimationHelper.performFragmentCircularRevealAnimation(binding.fraagmentWatchLaterRoot, requireActivity(), 1)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

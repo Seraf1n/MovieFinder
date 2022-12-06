@@ -48,7 +48,7 @@
         android:tint="?colorOnSecondary"
         app:srcCompat="@drawable/ic_baseline_arrow_circle_up_24"
         app:layout_anchor="@id/bottom_navigation_menu"
-        app:layout_anchorGravity="top|end"
+        app:layout_anchorGravity="center|top"
         />
 
 
