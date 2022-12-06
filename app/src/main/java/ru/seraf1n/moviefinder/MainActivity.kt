@@ -18,9 +18,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-
-
         initMenuButtons()
         changeFragment(HomeFragment(), "home")
     }
@@ -36,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         (bottomSheetBehavior as BottomSheetBehavior).addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                fab.visibility = View.VISIBLE
                 fab.scaleX = 0 - slideOffset
                 fab.scaleY = 0 - slideOffset
             }
@@ -103,6 +101,7 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener {
             // val bottomSheetBehavior = BottomSheetBehavior.from(bottom_navigation_menu)
             (bottomSheetBehavior as BottomSheetBehavior).state = BottomSheetBehavior.STATE_EXPANDED
+            it.visibility = View.GONE
         }
 
         bottom_navigation.setOnItemSelectedListener {
@@ -116,7 +115,7 @@ class MainActivity : AppCompatActivity() {
                     changeFragment(fragment ?: HomeFragment(), tag)
                     true
                 }
-                R.id.favorites -> {
+                R.id.favorities -> {
                     val tag = "favorites"
                     val fragment = checkFragmentExistence(tag)
                     changeFragment(fragment ?: FavoritesFragment(), tag)

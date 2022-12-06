@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/favorities"
+    android:id="@+id/fragment_favorities_root"
+    android:tag="fav_tag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/corner_background_fav"
@@ -10,7 +11,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favorites_recycler"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/zero_dp"
         android:layout_height="wrap_content"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"

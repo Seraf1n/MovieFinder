@@ -76,4 +76,9 @@ class DetailsFragment : Fragment() {
         //Устанавливаем описание
         binding.detailsDescription.text = film.description
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

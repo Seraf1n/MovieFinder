@@ -7,7 +7,7 @@
         android:title="@string/mainPage"
         app:showAsAction="withText"/>
     <item
-        android:id="@+id/favorites"
+        android:id="@+id/favorities"
         android:icon="@drawable/ic_round_favorite"
         android:title="@string/btn_fav"
         app:showAsAction="withText"/>
