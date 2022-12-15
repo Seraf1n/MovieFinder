@@ -10,6 +10,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="mainPage">На главную</string>
+    <string name="Color_0_to_25">#e84258</string>
+    <string name="color_26_to_50">#fd8060</string>
+    <string name="color_51_to_75">#fee191</string>
+    <string name="color_76_above">#b0d8a4</string>
     <!--  Remove or change this placeholder text -->
 
 </resources>

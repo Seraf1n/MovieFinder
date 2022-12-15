@@ -12,7 +12,9 @@ class FilmViewHolder(
     //Привязываем View из layout к переменным
     private val title = itemView.title
     private val poster = itemView.poster
+    private val ratingDonut = itemView.rating_donut
     private val description = itemView.description
+
 
     //В этом методе кладем данные из Film в наши View
     fun bind(film: Film) {
@@ -28,5 +30,7 @@ class FilmViewHolder(
             .into(poster)
         //Устанавливаем описание
         description.text = film.description
+        //Устанавливаем рэйтинг
+        ratingDonut.setProgress((film.rating * 10).toInt())
     }
 }
