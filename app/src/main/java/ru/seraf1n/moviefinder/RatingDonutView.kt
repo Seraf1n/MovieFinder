@@ -6,6 +6,13 @@ import android.util.AttributeSet
 import android.view.View
 import kotlin.math.min
 
+const val MULTIPLIER_2X = 2f
+const val MULTIPLIER_4X = 4
+const val MULTIPLIER_08 = 0.8f
+const val START_ANGLE = -90f
+const val MULTIPLIER_10X = 10f
+const val MULTIPLIER_36 = 3.6f
+
 
 class RatingDonutView @JvmOverloads constructor(
     context: Context,
@@ -64,7 +71,7 @@ class RatingDonutView @JvmOverloads constructor(
         //Краска для цифр
         digitPaint = Paint().apply {
             style = Paint.Style.FILL_AND_STROKE
-            strokeWidth = 2f
+            strokeWidth = MULTIPLIER_2X
             setShadowLayer(5f, 0f, 0f, Color.DKGRAY)
             textSize = scaleSize
             typeface = Typeface.SANS_SERIF
@@ -88,9 +95,9 @@ class RatingDonutView @JvmOverloads constructor(
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         radius = if (width > height) {
-            height.div(2f)
+            height.div(MULTIPLIER_2X)
         } else {
-            width.div(2f)
+            width.div(MULTIPLIER_2X)
         }
     }
 
@@ -105,8 +112,8 @@ class RatingDonutView @JvmOverloads constructor(
         val chosenHeight = chooseDimension(heightMode, heightSize)
 
         val minSide = min(chosenWidth, chosenHeight)
-        centerX = minSide.div(2f)
-        centerY = minSide.div(2f)
+        centerX = minSide.div(MULTIPLIER_2X)
+        centerY = minSide.div(MULTIPLIER_2X)
 
         setMeasuredDimension(minSide, minSide)
     }
@@ -119,7 +126,7 @@ class RatingDonutView @JvmOverloads constructor(
 
     private fun drawRating(canvas: Canvas) {
         //Здесь мы можем регулировать размер нашего кольца
-        val scale = radius * 0.8f
+        val scale = radius * MULTIPLIER_08
         //Сохраняем канвас
         canvas.save()
         //Перемещаем нулевые координаты канваса в центр, вы помните, так проще рисовать все круглое
@@ -129,16 +136,16 @@ class RatingDonutView @JvmOverloads constructor(
         //Рисуем задний фон(Желательно его отрисовать один раз в bitmap, так как он статичный)
         canvas.drawCircle(0f, 0f, radius, circlePaint)
         //Рисуем "арки", из них и будет состоять наше кольцо + у нас тут специальный метод
-        canvas.drawArc(oval, -90f, convertProgressToDegrees(progress), false, strokePaint)
+        canvas.drawArc(oval, START_ANGLE, convertProgressToDegrees(progress), false, strokePaint)
         //Восстанавливаем канвас
         canvas.restore()
     }
 
-    private fun convertProgressToDegrees(progress: Int): Float = progress * 3.6f
+    private fun convertProgressToDegrees(progress: Int): Float = progress * MULTIPLIER_36
 
     private fun drawText(canvas: Canvas) {
         //Форматируем текст, чтобы мы выводили дробное число с одной цифрой после точки
-        val message = String.format("%.1f", progress / 10f)
+        val message = String.format("%.1f", progress / MULTIPLIER_10X)
         //Получаем ширину и высоту текста, чтобы компенсировать их при отрисовке, чтобы текст был
         //точно в центре
         val widths = FloatArray(message.length)
@@ -146,7 +153,7 @@ class RatingDonutView @JvmOverloads constructor(
         var advance = 0f
         for (width in widths) advance += width
         //Рисуем наш текст
-        canvas.drawText(message, centerX - advance / 2, centerY + advance / 4, digitPaint)
+        canvas.drawText(message, centerX - advance / MULTIPLIER_2X, centerY + advance / MULTIPLIER_4X, digitPaint)
     }
 
 

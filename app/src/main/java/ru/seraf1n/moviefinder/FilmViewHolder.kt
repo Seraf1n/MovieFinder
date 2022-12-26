@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.film_item.view.*
 
+const val RATING_INDEX = 10
 //В конструктор класс передается layout, который мы создали(film_item.xml)
 class FilmViewHolder(
     itemView: View
@@ -31,6 +32,6 @@ class FilmViewHolder(
         //Устанавливаем описание
         description.text = film.description
         //Устанавливаем рэйтинг
-        ratingDonut.setProgress((film.rating * 10).toInt())
+        ratingDonut.setProgress((film.rating * RATING_INDEX).toInt())
     }
 }
