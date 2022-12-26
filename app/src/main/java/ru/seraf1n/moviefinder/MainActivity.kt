@@ -8,15 +8,16 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.bottom_navigation.*
+import ru.seraf1n.moviefinder.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private var backPressed = 0L
     private var bottomSheetBehavior: BottomSheetBehavior<View>? = null
-
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initMenuButtons()
         changeFragment(HomeFragment(), "home")
@@ -33,9 +34,9 @@ class MainActivity : AppCompatActivity() {
         (bottomSheetBehavior as BottomSheetBehavior).addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                fab.visibility = View.VISIBLE
-                fab.scaleX = 0 - slideOffset
-                fab.scaleY = 0 - slideOffset
+                binding.fab.visibility = View.VISIBLE
+                binding.fab.scaleX = 0 - slideOffset
+                binding.fab.scaleY = 0 - slideOffset
             }
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -98,13 +99,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        fab.setOnClickListener {
+        binding.fab.setOnClickListener {
             // val bottomSheetBehavior = BottomSheetBehavior.from(bottom_navigation_menu)
             (bottomSheetBehavior as BottomSheetBehavior).state = BottomSheetBehavior.STATE_EXPANDED
             it.visibility = View.GONE
         }
 
-        bottom_navigation.setOnItemSelectedListener {
+        binding.bottomNavigationMenu.bottomNavigation.setOnItemSelectedListener {
 
             when (it.itemId) {
                 R.id.home -> {
