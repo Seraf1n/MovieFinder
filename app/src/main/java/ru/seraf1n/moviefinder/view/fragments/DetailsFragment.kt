@@ -1,4 +1,4 @@
-package ru.seraf1n.moviefinder
+package ru.seraf1n.moviefinder.view.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import ru.seraf1n.moviefinder.utils.AnimationHelper
+import ru.seraf1n.moviefinder.R
 import ru.seraf1n.moviefinder.databinding.FragmentDetailsBinding
+import ru.seraf1n.moviefinder.domain.Film
 
 
 class DetailsFragment : Fragment() {

@@ -1,4 +1,4 @@
-package ru.seraf1n.moviefinder
+package ru.seraf1n.moviefinder.view
 
 import android.os.Bundle
 import android.view.View
@@ -8,7 +8,10 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_main.*
+import ru.seraf1n.moviefinder.R
 import ru.seraf1n.moviefinder.databinding.ActivityMainBinding
+import ru.seraf1n.moviefinder.domain.Film
+import ru.seraf1n.moviefinder.view.fragments.*
 
 class MainActivity : AppCompatActivity() {
     private var backPressed = 0L
