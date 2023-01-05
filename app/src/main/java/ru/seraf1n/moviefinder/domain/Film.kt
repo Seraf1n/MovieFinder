@@ -1,4 +1,4 @@
-package ru.seraf1n.moviefinder
+package ru.seraf1n.moviefinder.domain
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

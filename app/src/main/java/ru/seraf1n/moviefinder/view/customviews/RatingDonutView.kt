@@ -1,9 +1,10 @@
-package ru.seraf1n.moviefinder
+package ru.seraf1n.moviefinder.view.customviews
 
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import ru.seraf1n.moviefinder.R
 import kotlin.math.min
 
 const val MULTIPLIER_2X = 2f
@@ -124,6 +125,22 @@ class RatingDonutView @JvmOverloads constructor(
             else -> 300
         }
 
+    override fun onDraw(canvas: Canvas) {
+        //Рисуем кольцо и задний фон
+        drawRating(canvas)
+        //Рисуем цифры
+        drawText(canvas)
+    }
+
+    fun setProgress(pr: Int) {
+        //Кладем новое значение в наше поле класса
+        progress = pr
+        //Создаем краски с новыми цветами
+        initPaint()
+        //вызываем перерисовку View
+        invalidate()
+    }
+
     private fun drawRating(canvas: Canvas) {
         //Здесь мы можем регулировать размер нашего кольца
         val scale = radius * MULTIPLIER_08
@@ -141,8 +158,6 @@ class RatingDonutView @JvmOverloads constructor(
         canvas.restore()
     }
 
-    private fun convertProgressToDegrees(progress: Int): Float = progress * MULTIPLIER_36
-
     private fun drawText(canvas: Canvas) {
         //Форматируем текст, чтобы мы выводили дробное число с одной цифрой после точки
         val message = String.format("%.1f", progress / MULTIPLIER_10X)
@@ -156,22 +171,7 @@ class RatingDonutView @JvmOverloads constructor(
         canvas.drawText(message, centerX - advance / MULTIPLIER_2X, centerY + advance / MULTIPLIER_4X, digitPaint)
     }
 
-
-    override fun onDraw(canvas: Canvas) {
-        //Рисуем кольцо и задний фон
-        drawRating(canvas)
-        //Рисуем цифры
-        drawText(canvas)
-    }
-
-    fun setProgress(pr: Int) {
-        //Кладем новое значение в наше поле класса
-        progress = pr
-        //Создаем краски с новыми цветами
-        initPaint()
-        //вызываем перерисовку View
-        invalidate()
-    }
+    private fun convertProgressToDegrees(progress: Int): Float = progress * MULTIPLIER_36
 }
 
 

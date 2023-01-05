@@ -1,9 +1,12 @@
-package ru.seraf1n.moviefinder
+package ru.seraf1n.moviefinder.view.rv_adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.film_item.view.*
+import ru.seraf1n.moviefinder.view.rv_viewholders.FilmViewHolder
+import ru.seraf1n.moviefinder.R
+import ru.seraf1n.moviefinder.domain.Film
 
 //в параметр передаем слушатель, чтобы мы потом могли обрабатывать нажатия из класса Activity
 class FilmListRecyclerAdapter(private val clickListener: OnItemClickListener) :

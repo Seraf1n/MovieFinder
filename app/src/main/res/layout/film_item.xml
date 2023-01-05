@@ -6,7 +6,7 @@
     <data>
         <variable
             name="title"
-            type="ru.seraf1n.moviefinder.FilmViewHolder" />
+            type="ru.seraf1n.moviefinder.view.rv_viewholders.FilmViewHolder" />
     </data>
 
     <RelativeLayout
@@ -64,7 +64,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
 
-                    <ru.seraf1n.moviefinder.RatingDonutView
+                    <ru.seraf1n.moviefinder.view.customviews.RatingDonutView
                         android:id="@+id/rating_donut"
                         android:layout_height="@dimen/item_height"
                         android:layout_width="@dimen/item_width"

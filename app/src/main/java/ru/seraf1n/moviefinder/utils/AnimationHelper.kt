@@ -1,4 +1,4 @@
-package ru.seraf1n.moviefinder
+package ru.seraf1n.moviefinder.utils
 
 import android.app.Activity
 import android.view.View

@@ -16,6 +16,8 @@ import org.hamcrest.Matchers.allOf
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import ru.seraf1n.moviefinder.view.MainActivity
+import ru.seraf1n.moviefinder.view.rv_viewholders.FilmViewHolder
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
