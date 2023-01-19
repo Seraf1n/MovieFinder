@@ -4,9 +4,12 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.film_item.view.*
+import ru.seraf1n.moviefinder.data.ApiConstants
 import ru.seraf1n.moviefinder.domain.Film
 
 const val RATING_INDEX = 10
+private const val POSTER_PV = "w342"
+
 //В конструктор класс передается layout, который мы создали(film_item.xml)
 class FilmViewHolder(
     itemView: View
@@ -25,7 +28,7 @@ class FilmViewHolder(
         //Указываем контейнер, в котором будет "жить" наша картинка
         Glide.with(itemView)
             //Загружаем сам ресурс
-            .load(film.poster)
+            .load(ApiConstants.IMAGES_URL + POSTER_PV + film.poster)
             //Центруем изображение
             .centerCrop()
             //Указываем ImageView, куда будем загружать изображение

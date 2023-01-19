@@ -22,13 +22,23 @@
         android:id="@+id/main_recycler"
         android:layout_width="@dimen/zero_dp"
         android:layout_height="@dimen/zero_dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/layOutMargin"
+        app:layout_constraintBottom_toTopOf="@id/progress_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_view"
-        tools:listitem="@layout/film_item" >
+        tools:listitem="@layout/film_item"
+        >
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_recycler"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
