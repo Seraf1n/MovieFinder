@@ -11,11 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ru.seraf1n.moviefinder.utils.AnimationHelper
-import ru.seraf1n.moviefinder.view.rv_adapters.FilmListRecyclerAdapter
-import ru.seraf1n.moviefinder.view.MainActivity
 import ru.seraf1n.moviefinder.databinding.FragmentHomeBinding
 import ru.seraf1n.moviefinder.domain.Film
+import ru.seraf1n.moviefinder.utils.AnimationHelper
+import ru.seraf1n.moviefinder.view.MainActivity
+import ru.seraf1n.moviefinder.view.rv_adapters.FilmListRecyclerAdapter
 import ru.seraf1n.moviefinder.viewmodel.HomeFragmentViewModel
 import java.util.*
 
@@ -41,8 +41,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -53,9 +52,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         AnimationHelper.performFragmentCircularRevealAnimation(
-            binding.homeFragmentRoot,
-            requireActivity(),
-            1
+            binding.homeFragmentRoot, requireActivity(), 1
         )
         initRecyclerView()
 
@@ -94,31 +91,29 @@ class HomeFragment : Fragment() {
         })
     }
 
+
     private fun initRecyclerView() {
         //находим наш RV
         binding.mainRecycler.apply {
-            //Инициализируем наш адаптер в конструктор передаем анонимно инициализированный интерфейс,
-            //оставим его пока пустым, он нам понадобится во второй части задания
             filmsAdapter =
                 FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener {
                     override fun click(film: Film) {
                         (requireActivity() as MainActivity).launchDetailsFragment(film)
                     }
                 })
+
             //Присваиваем адаптер
             adapter = filmsAdapter
             //Присвои layoutmanager
             layoutManager = LinearLayoutManager(requireContext())
+
             //Применяем декоратор для отступов
             val decorator = TopSpacingItemDecoration(8)
             addItemDecoration(decorator)
         }
         //Кладем нашу БД в RV
         filmsAdapter.addItems(initMovieBase())
-
     }
-
-
 
     private fun initMovieBase(): List<Film> {
         return filmsDataBase
@@ -135,10 +130,7 @@ class TopSpacingItemDecoration(private val paddingInDp: Int) : RecyclerView.Item
         get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
     override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
+        outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State
     ) {
         super.getItemOffsets(outRect, view, parent, state)
         outRect.top = paddingInDp.convertPx

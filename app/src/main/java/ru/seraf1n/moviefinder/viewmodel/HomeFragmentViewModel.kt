@@ -6,13 +6,26 @@ import ru.seraf1n.moviefinder.App
 import ru.seraf1n.moviefinder.domain.Film
 import ru.seraf1n.moviefinder.domain.Interactor
 
-class HomeFragmentViewModel : ViewModel() {
+class HomeFragmentViewModel constructor(page:Int = 1) : ViewModel() {
     val filmsListLiveData:  MutableLiveData<List<Film>> = MutableLiveData()
     //Инициализируем интерактор
     private var interactor: Interactor = App.instance.interactor
 
+
     init {
-        val films = interactor.getFilmsDB()
-        filmsListLiveData.postValue(films)
+        interactor.getFilmsFromApi(page, object : ApiCallback {
+            override fun onSuccess(films: List<Film>) {
+                filmsListLiveData.postValue(films)
+            }
+
+            override fun onFailure() {
+            }
+        })
     }
+
+    interface ApiCallback {
+        fun onSuccess(films: List<Film>)
+        fun onFailure()
+    }
+
 }

@@ -6,11 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import ru.seraf1n.moviefinder.utils.AnimationHelper
+import com.bumptech.glide.Glide
 import ru.seraf1n.moviefinder.R
+import ru.seraf1n.moviefinder.data.ApiConstants
 import ru.seraf1n.moviefinder.databinding.FragmentDetailsBinding
 import ru.seraf1n.moviefinder.domain.Film
+import ru.seraf1n.moviefinder.utils.AnimationHelper
 
+
+private const val POSTER_DETAILED = "w780"
 
 class DetailsFragment : Fragment() {
     private var _binding: FragmentDetailsBinding? = null
@@ -75,7 +79,11 @@ class DetailsFragment : Fragment() {
         //Устанавливаем заголовок
         binding.toolbar.title = film.title
         //Устанавливаем картинку
-        binding.detailsPoster.setImageResource(film.poster)
+        Glide.with(this)
+            .load(ApiConstants.IMAGES_URL + POSTER_DETAILED + film.poster)
+            .centerCrop()
+            .into(binding.detailsPoster)
+
         //Устанавливаем описание
         binding.detailsDescription.text = film.description
     }
