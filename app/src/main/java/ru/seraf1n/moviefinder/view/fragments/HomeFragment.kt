@@ -19,6 +19,10 @@ import ru.seraf1n.moviefinder.view.rv_adapters.FilmListRecyclerAdapter
 import ru.seraf1n.moviefinder.viewmodel.HomeFragmentViewModel
 import java.util.*
 
+private const val POSITION_UNO = 1
+
+private const val PADDING_8 = 8
+
 class HomeFragment : Fragment() {
 
     private var filmsDataBase = listOf<Film>()
@@ -52,7 +56,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         AnimationHelper.performFragmentCircularRevealAnimation(
-            binding.homeFragmentRoot, requireActivity(), 1
+            binding.homeFragmentRoot, requireActivity(), POSITION_UNO
         )
         initRecyclerView()
 
@@ -108,7 +112,7 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
 
             //Применяем декоратор для отступов
-            val decorator = TopSpacingItemDecoration(8)
+            val decorator = TopSpacingItemDecoration(PADDING_8)
             addItemDecoration(decorator)
         }
         //Кладем нашу БД в RV

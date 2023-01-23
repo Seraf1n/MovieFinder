@@ -8,6 +8,8 @@ import java.util.concurrent.Executors
 import kotlin.math.hypot
 import kotlin.math.roundToInt
 
+private const val DURATION = 500L
+
 object AnimationHelper {
     //Это переменная для того, чтобы круг проявления расходился именно от иконки меню навигации
     private const val MENU_ITEMS = 4
@@ -38,7 +40,7 @@ object AnimationHelper {
                         //Создаем саму анимацию
                         ViewAnimationUtils.createCircularReveal(rootView, x, y, startRadius.toFloat(), endRadius.toFloat()).apply {
                             //Устанавливаем время анимации
-                            duration = 500
+                            duration = DURATION
                             //Интерполятор для более естественной анимации
                             interpolator = AccelerateDecelerateInterpolator()
                             //Запускаем

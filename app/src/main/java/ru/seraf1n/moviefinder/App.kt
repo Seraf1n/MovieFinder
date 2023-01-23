@@ -10,6 +10,8 @@ import ru.seraf1n.moviefinder.data.TmdbApi
 import ru.seraf1n.moviefinder.domain.Interactor
 import java.util.concurrent.TimeUnit
 
+private const val TIMEOUT = 30L
+
 class App : Application() {
 
     lateinit var interactor: Interactor
@@ -24,8 +26,8 @@ class App : Application() {
         //Создаём кастомный клиент
         val okHttpClient = OkHttpClient.Builder()
             //Настраиваем таймауты для медленного интернета
-            .callTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
+            .callTimeout(TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(TIMEOUT, TimeUnit.SECONDS)
             //Добавляем логгер
             .addInterceptor(HttpLoggingInterceptor().apply {
                 if (BuildConfig.DEBUG) {
