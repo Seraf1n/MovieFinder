@@ -2,14 +2,15 @@ package ru.seraf1n.moviefinder.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.seraf1n.moviefinder.App
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import ru.seraf1n.moviefinder.domain.Film
 import ru.seraf1n.moviefinder.domain.Interactor
 
-class HomeFragmentViewModel constructor(page:Int = 1) : ViewModel() {
+class HomeFragmentViewModel constructor(page:Int = 1) : ViewModel(), KoinComponent {
     val filmsListLiveData:  MutableLiveData<List<Film>> = MutableLiveData()
     //Инициализируем интерактор
-    private var interactor: Interactor = App.instance.interactor
+    private val interactor: Interactor by inject()
 
 
     init {
