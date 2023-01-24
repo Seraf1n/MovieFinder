@@ -4,12 +4,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import ru.seraf1n.moviefinder.data.API
+import ru.seraf1n.moviefinder.data.MainRepository
 import ru.seraf1n.moviefinder.data.TmdbApi
 import ru.seraf1n.moviefinder.data.entity.TmdbResultsDTO
 import ru.seraf1n.moviefinder.utils.Converter
 import ru.seraf1n.moviefinder.viewmodel.HomeFragmentViewModel
 
-class Interactor(private val retrofitService: TmdbApi) {
+class Interactor(private val repo: MainRepository, private val retrofitService: TmdbApi) {
     //В конструктор мы будем передавать коллбэк из вью модели, чтобы реагировать на то, когда фильмы будут получены
     //и страницу, которую нужно загрузить (это для пагинации)
 
