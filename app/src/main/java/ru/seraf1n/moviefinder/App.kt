@@ -1,25 +1,22 @@
 package ru.seraf1n.moviefinder
 
 import android.app.Application
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
-import ru.seraf1n.moviefinder.di.DI
+import ru.seraf1n.moviefinder.di.AppComponent
+import ru.seraf1n.moviefinder.di.DaggerAppComponent
 
 class App : Application() {
 
+    lateinit var dagger: AppComponent
+
     override fun onCreate() {
         super.onCreate()
-        //Инициализируем экземпляр App, через который будем получать доступ к остальным переменным
+        instance = this
+        //Создаем компонент
+        dagger = DaggerAppComponent.create()
+    }
 
-        //Инициализируем репозиторий
-        startKoin {
-            //Прикрепляем контекст
-            androidContext(this@App)
-            //(Опционально) подключаем зависимость
-            androidLogger()
-            //Инициализируем модули
-            modules(listOf(DI.mainModule))
-        }
+    companion object {
+        lateinit var instance: App
+            private set
     }
 }
