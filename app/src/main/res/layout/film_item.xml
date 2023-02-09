@@ -34,7 +34,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@tools:sample/avatars" />
 
-
                 <TextView
                     android:id="@+id/title"
                     android:layout_width="@dimen/zero_dp"

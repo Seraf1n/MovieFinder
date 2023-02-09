@@ -12,7 +12,7 @@ import ru.seraf1n.moviefinder.domain.Film
 class FilmListRecyclerAdapter(private val clickListener: OnItemClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //Здесь у нас хранится список элементов для RV
-    private val items = mutableListOf<Film>()
+    val items = mutableListOf<Film>()
 
     //Этот метод нужно переопределить на возврат количества элементов в списке RV
     override fun getItemCount() = items.size

@@ -49,8 +49,10 @@ class HomeFragment : Fragment() {
     ): View {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        initPullToRefresh()
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -64,10 +66,15 @@ class HomeFragment : Fragment() {
             binding.searchView.isIconified = false
         }
 
+//        viewModel.filmsListLiveData.observe(viewLifecycleOwner) {
+//            filmsDataBase = it
+//        }
+
+        //Кладем нашу БД в RV
         viewModel.filmsListLiveData.observe(viewLifecycleOwner) {
             filmsDataBase = it
+            filmsAdapter.addItems(it)
         }
-
         //Подключаем слушателя изменений введенного текста в поиска
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             //Этот метод отрабатывает при нажатии кнопки "поиск" на софт клавиатуре
@@ -126,6 +133,18 @@ class HomeFragment : Fragment() {
     override fun onDestroy() {
         _binding = null
         super.onDestroy()
+    }
+
+    private fun initPullToRefresh() {
+        //Вешаем слушатель, чтобы вызвался pull to refresh
+        binding.pullToRefresh.setOnRefreshListener {
+            //Чистим адаптер(items нужно будет сделать паблик или создать для этого публичный метод)
+            filmsAdapter.items.clear()
+            //Делаем новый запрос фильмов на сервер
+            viewModel.getFilms()
+            //Убираем крутящееся колечко
+            binding.pullToRefresh.isRefreshing = false
+        }
     }
 }
 

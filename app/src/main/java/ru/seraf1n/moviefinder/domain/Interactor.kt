@@ -7,19 +7,15 @@ import ru.seraf1n.moviefinder.data.API
 import ru.seraf1n.moviefinder.data.MainRepository
 import ru.seraf1n.moviefinder.data.TmdbApi
 import ru.seraf1n.moviefinder.data.entity.TmdbResultsDTO
+import ru.seraf1n.moviefinder.data.settings.PreferenceProvider
 import ru.seraf1n.moviefinder.utils.Converter
 import ru.seraf1n.moviefinder.viewmodel.HomeFragmentViewModel
 
-class Interactor(private val repo: MainRepository, private val retrofitService: TmdbApi) {
-    //В конструктор мы будем передавать коллбэк из вью модели, чтобы реагировать на то, когда фильмы будут получены
-    //и страницу, которую нужно загрузить (это для пагинации)
-
+class Interactor(private val repo: MainRepository, private val retrofitService: TmdbApi, private val preferences: PreferenceProvider) {
     fun getFilmsFromApi(page: Int, callback: HomeFragmentViewModel.ApiCallback) {
-        retrofitService.getFilms(API.KEY, "ru-RU", page).enqueue(object : Callback<TmdbResultsDTO> {
-            override fun onResponse(
-                call: Call<TmdbResultsDTO>,
-                response: Response<TmdbResultsDTO>
-            ) {
+        //Метод getDefaultCategoryFromPreferences() будет нам получать при каждом запросе нужный нам список фильмов
+        retrofitService.getFilms(getDefaultCategoryFromPreferences(), API.KEY, "ru-RU", page).enqueue(object : Callback<TmdbResultsDTO> {
+            override fun onResponse(call: Call<TmdbResultsDTO>, response: Response<TmdbResultsDTO>) {
                 //При успехе мы вызываем метод передаем onSuccess и в этот коллбэк список фильмов
                 callback.onSuccess(Converter.convertApiListToDtoList(response.body()?.tmdbFilms))
             }
@@ -30,5 +26,10 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
             }
         })
     }
-
+    //Метод для сохранения настроек
+    fun saveDefaultCategoryToPreferences(category: String) {
+        preferences.saveDefaultCategory(category)
+    }
+    //Метод для получения настроек
+    fun getDefaultCategoryFromPreferences() = preferences.getDefaultCategory()
 }

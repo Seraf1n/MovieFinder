@@ -12,7 +12,7 @@ private const val DURATION = 500L
 
 object AnimationHelper {
     //Это переменная для того, чтобы круг проявления расходился именно от иконки меню навигации
-    private const val MENU_ITEMS = 4
+    private const val MENU_ITEMS = 5
     private const val CENTER_INDEX = 2
     //В метод у нас приходит 3 параметра:
     //1 - наше rootView, которое одновременно является и контейнером

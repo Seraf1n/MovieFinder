@@ -5,6 +5,7 @@ import ru.seraf1n.moviefinder.di.modules.DatabaseModule
 import ru.seraf1n.moviefinder.di.modules.DomainModule
 import ru.seraf1n.moviefinder.di.modules.RemoteModule
 import ru.seraf1n.moviefinder.viewmodel.HomeFragmentViewModel
+import ru.seraf1n.moviefinder.viewmodel.SettingsFragmentViewModel
 import javax.inject.Singleton
 
 @Singleton
@@ -17,6 +18,8 @@ import javax.inject.Singleton
     ]
 )
 interface AppComponent {
-    //метод для того, чтобы появилась внедрять зависимости в HomeFragmentViewModel
+    //метод для того, чтобы появилась возможность внедрять зависимости в HomeFragmentViewModel
     fun inject(homeFragmentViewModel: HomeFragmentViewModel)
+    //метод для того, чтобы появилась возможность внедрять зависимости в SettingsFragmentViewModel
+    fun inject(settingsFragmentViewModel: SettingsFragmentViewModel)
 }
