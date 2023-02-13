@@ -13,6 +13,8 @@
     <dimen name="item_height">50dp</dimen>
     <dimen name="item_width">50dp</dimen>
     <dimen name="translation_z">11dp</dimen>
+    <dimen name="dp_8">8dp</dimen>
+    <dimen name="dp_16">16dp</dimen>
 
 
 </resources>
