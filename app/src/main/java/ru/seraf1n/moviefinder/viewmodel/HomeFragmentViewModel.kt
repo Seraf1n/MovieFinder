@@ -26,6 +26,7 @@ class HomeFragmentViewModel constructor(page: Int = 1) : ViewModel() {
             }
 
             override fun onFailure() {
+                filmsListLiveData.postValue(interactor.getFilmsFromDB())
             }
         })
     }
