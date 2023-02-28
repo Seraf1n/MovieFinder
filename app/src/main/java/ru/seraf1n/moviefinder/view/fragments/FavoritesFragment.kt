@@ -11,7 +11,7 @@ import ru.seraf1n.moviefinder.utils.AnimationHelper
 import ru.seraf1n.moviefinder.view.rv_adapters.FilmListRecyclerAdapter
 import ru.seraf1n.moviefinder.view.MainActivity
 import ru.seraf1n.moviefinder.databinding.FragmentFavoritiesBinding
-import ru.seraf1n.moviefinder.domain.Film
+import ru.seraf1n.moviefinder.data.entity.Film
 
 class FavoritesFragment : Fragment() {
 

@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import ru.seraf1n.moviefinder.R
 import ru.seraf1n.moviefinder.data.ApiConstants
 import ru.seraf1n.moviefinder.databinding.FragmentDetailsBinding
-import ru.seraf1n.moviefinder.domain.Film
+import ru.seraf1n.moviefinder.data.entity.Film
 import ru.seraf1n.moviefinder.utils.AnimationHelper
 
 

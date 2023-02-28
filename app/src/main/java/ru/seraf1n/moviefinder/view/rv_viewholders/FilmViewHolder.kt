@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.film_item.view.*
 import ru.seraf1n.moviefinder.data.ApiConstants
-import ru.seraf1n.moviefinder.domain.Film
+import ru.seraf1n.moviefinder.data.entity.Film
 
 const val RATING_INDEX = 10
 private const val POSTER_PV = "w342"
