@@ -3,8 +3,9 @@ package ru.seraf1n.moviefinder.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.seraf1n.moviefinder.App
-import ru.seraf1n.moviefinder.domain.Film
+import ru.seraf1n.moviefinder.data.entity.Film
 import ru.seraf1n.moviefinder.domain.Interactor
+import java.util.concurrent.Executors
 import javax.inject.Inject
 
 class HomeFragmentViewModel constructor(page: Int = 1) : ViewModel() {
@@ -26,7 +27,9 @@ class HomeFragmentViewModel constructor(page: Int = 1) : ViewModel() {
             }
 
             override fun onFailure() {
-                filmsListLiveData.postValue(interactor.getFilmsFromDB())
+                Executors.newSingleThreadExecutor().execute {
+                    filmsListLiveData.postValue(interactor.getFilmsFromDB())
+                }
             }
         })
     }

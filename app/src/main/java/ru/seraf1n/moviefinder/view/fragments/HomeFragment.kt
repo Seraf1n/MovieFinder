@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.seraf1n.moviefinder.databinding.FragmentHomeBinding
-import ru.seraf1n.moviefinder.domain.Film
+import ru.seraf1n.moviefinder.data.entity.Film
 import ru.seraf1n.moviefinder.utils.AnimationHelper
 import ru.seraf1n.moviefinder.view.MainActivity
 import ru.seraf1n.moviefinder.view.rv_adapters.FilmListRecyclerAdapter

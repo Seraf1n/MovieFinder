@@ -6,6 +6,7 @@ import retrofit2.Response
 import ru.seraf1n.moviefinder.data.API
 import ru.seraf1n.moviefinder.data.MainRepository
 import ru.seraf1n.moviefinder.data.TmdbApi
+import ru.seraf1n.moviefinder.data.entity.Film
 import ru.seraf1n.moviefinder.data.entity.TmdbResultsDTO
 import ru.seraf1n.moviefinder.data.settings.PreferenceProvider
 import ru.seraf1n.moviefinder.utils.Converter
@@ -20,7 +21,7 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
                 val list = Converter.convertApiListToDtoList(response.body()?.tmdbFilms)
                 //Кладем фильмы в бд
                 list.forEach {
-                    repo.putToDb(film = it)
+                    repo.putToDb(list)
                 }
                 callback.onSuccess(list)
             }
