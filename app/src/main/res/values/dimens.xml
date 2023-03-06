@@ -15,6 +15,7 @@
     <dimen name="translation_z">11dp</dimen>
     <dimen name="dp_8">8dp</dimen>
     <dimen name="dp_16">16dp</dimen>
+    <dimen name="progress_bar_size">100dp</dimen>
 
 
 </resources>

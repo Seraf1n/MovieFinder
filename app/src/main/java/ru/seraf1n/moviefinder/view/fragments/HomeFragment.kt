@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +20,7 @@ import ru.seraf1n.moviefinder.view.MainActivity
 import ru.seraf1n.moviefinder.view.rv_adapters.FilmListRecyclerAdapter
 import ru.seraf1n.moviefinder.viewmodel.HomeFragmentViewModel
 import java.util.*
+
 
 private const val POSITION_UNO = 1
 
@@ -51,6 +54,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         initPullToRefresh()
         return binding.root
+
     }
 
 
@@ -66,15 +70,15 @@ class HomeFragment : Fragment() {
             binding.searchView.isIconified = false
         }
 
-//        viewModel.filmsListLiveData.observe(viewLifecycleOwner) {
-//            filmsDataBase = it
-//        }
 
         //Кладем нашу БД в RV
         viewModel.filmsListLiveData.observe(viewLifecycleOwner) {
             filmsDataBase = it
             filmsAdapter.addItems(it)
         }
+        viewModel.showProgressBar.observe(viewLifecycleOwner, Observer<Boolean> {
+            binding.progressBar.isVisible = it
+        })
         //Подключаем слушателя изменений введенного текста в поиска
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             //Этот метод отрабатывает при нажатии кнопки "поиск" на софт клавиатуре
