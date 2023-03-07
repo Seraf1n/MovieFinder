@@ -9,6 +9,7 @@ import ru.seraf1n.moviefinder.domain.Interactor
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
+const val DEFAULT_PAGE = 1
 class HomeFragmentViewModel constructor(page: Int = 1) : ViewModel() {
 
     val showProgressBar: MutableLiveData<Boolean> = MutableLiveData()
@@ -22,7 +23,7 @@ class HomeFragmentViewModel constructor(page: Int = 1) : ViewModel() {
         getFilms()
     }
     fun getFilms() {
-        interactor.getFilmsFromApi(1, object : ApiCallback {
+        interactor.getFilmsFromApi(DEFAULT_PAGE, object : ApiCallback {
             override fun onSuccess() {
                 showProgressBar.postValue(false)
             }
