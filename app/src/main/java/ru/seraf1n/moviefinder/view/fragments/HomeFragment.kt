@@ -76,9 +76,9 @@ class HomeFragment : Fragment() {
             filmsDataBase = it
             filmsAdapter.addItems(it)
         }
-        viewModel.showProgressBar.observe(viewLifecycleOwner, Observer<Boolean> {
+        viewModel.showProgressBar.observe(viewLifecycleOwner) {
             binding.progressBar.isVisible = it
-        })
+        }
         //Подключаем слушателя изменений введенного текста в поиска
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             //Этот метод отрабатывает при нажатии кнопки "поиск" на софт клавиатуре
