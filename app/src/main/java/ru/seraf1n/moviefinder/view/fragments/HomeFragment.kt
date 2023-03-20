@@ -9,12 +9,12 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ru.seraf1n.moviefinder.databinding.FragmentHomeBinding
+import kotlinx.coroutines.*
 import ru.seraf1n.moviefinder.data.entity.Film
+import ru.seraf1n.moviefinder.databinding.FragmentHomeBinding
 import ru.seraf1n.moviefinder.utils.AnimationHelper
 import ru.seraf1n.moviefinder.view.MainActivity
 import ru.seraf1n.moviefinder.view.rv_adapters.FilmListRecyclerAdapter
@@ -28,6 +28,7 @@ private const val PADDING_8 = 8
 
 class HomeFragment : Fragment() {
 
+    private lateinit var scope: CoroutineScope
     private var filmsDataBase = listOf<Film>()
         //Используем backing field
         set(value) {
@@ -72,13 +73,24 @@ class HomeFragment : Fragment() {
 
 
         //Кладем нашу БД в RV
-        viewModel.filmsListLiveData.observe(viewLifecycleOwner) {
-            filmsDataBase = it
-            filmsAdapter.addItems(it)
+        scope = CoroutineScope(Dispatchers.IO).also { scope ->
+            scope.launch {
+                viewModel.filmsListLiveData.collect {
+                    withContext(Dispatchers.Main) {
+                        filmsAdapter.addItems(it)
+                        filmsDataBase = it
+                    }
+                }
+            }
         }
-        viewModel.showProgressBar.observe(viewLifecycleOwner) {
-            binding.progressBar.isVisible = it
+        scope.launch {
+            for (element in viewModel.showProgressBar) {
+                launch(Dispatchers.Main) {
+                    binding.progressBar.isVisible = element
+                }
+            }
         }
+
         //Подключаем слушателя изменений введенного текста в поиска
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             //Этот метод отрабатывает при нажатии кнопки "поиск" на софт клавиатуре
@@ -133,7 +145,10 @@ class HomeFragment : Fragment() {
     private fun initMovieBase(): List<Film> {
         return filmsDataBase
     }
-
+    override fun onStop() {
+        super.onStop()
+        scope.cancel()
+    }
     override fun onDestroy() {
         _binding = null
         super.onDestroy()
