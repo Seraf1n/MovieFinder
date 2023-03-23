@@ -1,10 +1,9 @@
 package ru.seraf1n.moviefinder.domain
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,12 +22,9 @@ class Interactor(
 
 ) {
 
-    val scope: CoroutineScope = CoroutineScope(Dispatchers.IO)
-    var progressBarState = Channel<Boolean>(Channel.CONFLATED)
+    var progressBarState: BehaviorSubject<Boolean> = BehaviorSubject.create()
     fun getFilmsFromApi(page: Int) {
-        scope.launch {
-            progressBarState.send(true)
-        }
+        progressBarState.onNext(true)
         //Метод getDefaultCategoryFromPreferences() будет нам получать при каждом запросе нужный нам список фильмов
         retrofitService.getFilms(getDefaultCategoryFromPreferences(), API.KEY, "ru-RU", page)
             .enqueue(object : Callback<TmdbResultsDTO> {
@@ -39,19 +35,16 @@ class Interactor(
                     //При успехе мы вызываем метод, передаем onSuccess и в этот коллбэк список фильмов
                     val list = Converter.convertApiListToDtoList(response.body()?.tmdbFilms)
                     //Кладем фильмы в бд
-                    scope.launch {
+                    Completable.fromSingle<List<Film>> {
                         repo.putToDb(list)
-                        progressBarState.send(false)
                     }
-
+                        .subscribeOn(Schedulers.io())
+                        .subscribe()
+                    progressBarState.onNext(false)
                 }
 
                 override fun onFailure(call: Call<TmdbResultsDTO>, t: Throwable) {
-                    //В случае провала вызываем другой метод коллбека
-                    scope.launch {
-                        progressBarState.send(false)
-                    }
-
+                    progressBarState.onNext(false)
                 }
             })
     }
@@ -64,5 +57,5 @@ class Interactor(
     //Метод для получения настроек
     fun getDefaultCategoryFromPreferences() = preferences.getDefaultCategory()
 
-    fun getFilmsFromDB(): Flow<List<Film>> = repo.getAllFromDB()
+    fun getFilmsFromDB(): Observable<List<Film>> = repo.getAllFromDB()
 }
