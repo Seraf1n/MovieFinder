@@ -12,10 +12,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.*
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.seraf1n.moviefinder.data.entity.Film
 import ru.seraf1n.moviefinder.databinding.FragmentHomeBinding
 import ru.seraf1n.moviefinder.utils.AnimationHelper
+import ru.seraf1n.moviefinder.utils.AutoDisposable
+import ru.seraf1n.moviefinder.utils.addTo
 import ru.seraf1n.moviefinder.view.MainActivity
 import ru.seraf1n.moviefinder.view.rv_adapters.FilmListRecyclerAdapter
 import ru.seraf1n.moviefinder.viewmodel.HomeFragmentViewModel
@@ -28,7 +31,7 @@ private const val PADDING_8 = 8
 
 class HomeFragment : Fragment() {
 
-    private lateinit var scope: CoroutineScope
+    private val autoDisposable = AutoDisposable()
     private var filmsDataBase = listOf<Film>()
         //Используем backing field
         set(value) {
@@ -47,6 +50,11 @@ class HomeFragment : Fragment() {
     private lateinit var filmsAdapter: FilmListRecyclerAdapter
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        autoDisposable.bindTo(lifecycle)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -73,23 +81,20 @@ class HomeFragment : Fragment() {
 
 
         //Кладем нашу БД в RV
-        scope = CoroutineScope(Dispatchers.IO).also { scope ->
-            scope.launch {
-                viewModel.filmsListLiveData.collect {
-                    withContext(Dispatchers.Main) {
-                        filmsAdapter.addItems(it)
-                        filmsDataBase = it
-                    }
-                }
+        viewModel.filmsListLiveData.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread()).subscribe { list ->
+                filmsAdapter.addItems(list)
+                filmsDataBase = list
             }
-        }
-        scope.launch {
-            for (element in viewModel.showProgressBar) {
-                launch(Dispatchers.Main) {
-                    binding.progressBar.isVisible = element
-                }
+            .addTo(autoDisposable)
+
+
+
+        viewModel.showProgressBar.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread()).subscribe {
+                binding.progressBar.isVisible = it
             }
-        }
+            .addTo(autoDisposable)
 
         //Подключаем слушателя изменений введенного текста в поиска
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -145,10 +150,7 @@ class HomeFragment : Fragment() {
     private fun initMovieBase(): List<Film> {
         return filmsDataBase
     }
-    override fun onStop() {
-        super.onStop()
-        scope.cancel()
-    }
+
     override fun onDestroy() {
         _binding = null
         super.onDestroy()
