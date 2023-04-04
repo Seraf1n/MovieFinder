@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -13,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.seraf1n.moviefinder.data.entity.Film
 import ru.seraf1n.moviefinder.databinding.FragmentHomeBinding
@@ -23,11 +26,7 @@ import ru.seraf1n.moviefinder.view.MainActivity
 import ru.seraf1n.moviefinder.view.rv_adapters.FilmListRecyclerAdapter
 import ru.seraf1n.moviefinder.viewmodel.HomeFragmentViewModel
 import java.util.*
-
-
-private const val POSITION_UNO = 1
-
-private const val PADDING_8 = 8
+import java.util.concurrent.TimeUnit
 
 class HomeFragment : Fragment() {
 
@@ -74,11 +73,8 @@ class HomeFragment : Fragment() {
             binding.homeFragmentRoot, requireActivity(), POSITION_UNO
         )
         initRecyclerView()
-
-        binding.searchView.setOnClickListener {
-            binding.searchView.isIconified = false
-        }
-
+        //Подключаем слушателя изменений введенного текста в поиска
+        initSearchView()
 
         //Кладем нашу БД в RV
         viewModel.filmsListLiveData.subscribeOn(Schedulers.io())
@@ -95,32 +91,54 @@ class HomeFragment : Fragment() {
                 binding.progressBar.isVisible = it
             }
             .addTo(autoDisposable)
+    }
 
-        //Подключаем слушателя изменений введенного текста в поиска
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            //Этот метод отрабатывает при нажатии кнопки "поиск" на софт клавиатуре
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
-            }
+    private fun initSearchView() {
+        binding.searchView.setOnClickListener {
+            binding.searchView.isIconified = false
+        }
 
-            //Этот метод отрабатывает на каждое изменения текста
-            override fun onQueryTextChange(newText: String): Boolean {
-                //Если ввод пуст то вставляем в адаптер всю БД
-                if (newText.isEmpty()) {
-                    filmsAdapter.addItems(filmsDataBase)
-                    return true
+        Observable.create(){ subscriber ->
+            //Вешаем слушатель на клавиатуру
+            binding.searchView.setOnQueryTextListener(object :
+            //Вызывается на ввод символов
+                SearchView.OnQueryTextListener {
+                override fun onQueryTextChange(newText: String): Boolean {
+                    filmsAdapter.items.clear()
+                    subscriber.onNext(newText)
+                    return false
                 }
-                //Фильтруем список на поискк подходящих сочетаний
-                val result = filmsDataBase.filter {
-                    //Чтобы все работало правильно, нужно и запрос, и имя фильма приводить к нижнему регистру
-                    it.title.lowercase(Locale.getDefault())
-                        .contains(newText.lowercase(Locale.getDefault()))
+                //Вызывается по нажатию кнопки "Поиск"
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    subscriber.onNext(query)
+                    return false
                 }
-                //Добавляем в адаптер
-                filmsAdapter.addItems(result)
-                return true
+            })
+        }
+            .subscribeOn(Schedulers.io())
+            .map {
+                it.lowercase(Locale.getDefault()).trim()
             }
-        })
+            .debounce(TIMEOUT_800, TimeUnit.MILLISECONDS)
+            .filter {
+                //Если в поиске пустое поле, возвращаем список фильмов по умолчанию
+                viewModel.getFilms()
+                it.isNotBlank()
+            }
+            .flatMap {
+                viewModel.getSearchResult(it)
+            }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+            onError = {
+                Toast.makeText(requireContext(), ERROR, Toast.LENGTH_SHORT).show()
+            },
+            onNext = {
+                filmsAdapter.addItems(it)
+            }
+        )
+            .addTo(autoDisposable)
     }
 
 
@@ -167,6 +185,13 @@ class HomeFragment : Fragment() {
             binding.pullToRefresh.isRefreshing = false
         }
     }
+
+   companion object const{
+       private const val POSITION_UNO = 1
+       private const val PADDING_8 = 8
+       private const val TIMEOUT_800 = 800L
+       private const val ERROR = "Что-то пошло не так"
+    }
 }
 
 class TopSpacingItemDecoration(private val paddingInDp: Int) : RecyclerView.ItemDecoration() {
@@ -183,3 +208,4 @@ class TopSpacingItemDecoration(private val paddingInDp: Int) : RecyclerView.Item
 
     }
 }
+
