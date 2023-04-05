@@ -1,7 +1,7 @@
 package ru.seraf1n.moviefinder.utils
 
-import ru.seraf1n.moviefinder.data.entity.TmdbFilm
 import ru.seraf1n.moviefinder.data.entity.Film
+import ru.seraf1n.remote_module.entity.TmdbFilm
 
 object Converter {
     fun convertApiListToDtoList(list: List<TmdbFilm>?): List<Film> {

@@ -1,9 +1,12 @@
 package ru.seraf1n.moviefinder.data.entity
 
 import android.os.Parcelable
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
-import ru.seraf1n.moviefinder.data.dao.FilmDao
+
 
 @Parcelize
 @Entity(tableName = "cached_films", indices = [Index(value = ["title"], unique = true)])
@@ -16,7 +19,3 @@ data class Film(
     var isInFavorites: Boolean = false
 ) : Parcelable
 
-@Database(entities = [Film::class], version = 1, exportSchema = false)
-abstract class AppDatabase : RoomDatabase() {
-    abstract fun filmDao(): FilmDao
-}

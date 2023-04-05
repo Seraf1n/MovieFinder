@@ -3,9 +3,9 @@ package ru.seraf1n.moviefinder.view.rv_viewholders
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.film_item.view.*
-import ru.seraf1n.moviefinder.data.ApiConstants
 import ru.seraf1n.moviefinder.data.entity.Film
+import ru.seraf1n.moviefinder.databinding.FilmItemBinding
+import ru.seraf1n.remote_module.entity.ApiConstants
 
 const val RATING_INDEX = 10
 private const val POSTER_PV = "w342"
@@ -14,11 +14,13 @@ private const val POSTER_PV = "w342"
 class FilmViewHolder(
     itemView: View
 ) : RecyclerView.ViewHolder(itemView) {
-    //Привязываем View из layout к переменным
-    private val title = itemView.title
-    private val poster = itemView.poster
-    private val ratingDonut = itemView.rating_donut
-    private val description = itemView.description
+    private val filmItemBinding = FilmItemBinding.bind(itemView)
+    //Привязываем view из layout к переменным
+    private val title = filmItemBinding.title
+    private val poster = filmItemBinding.poster
+    private val description = filmItemBinding.description
+    //Вот здесь мы находим в верстке наш прогресс бар для рейтинга
+    private val ratingDonut = filmItemBinding.ratingDonut
 
 
     //В этом методе кладем данные из Film в наши View

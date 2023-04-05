@@ -1,4 +1,4 @@
-package ru.seraf1n.moviefinder.di.modules
+package ru.seraf1n.remote_module
 
 import dagger.Module
 import dagger.Provides
@@ -7,11 +7,10 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.seraf1n.moviefinder.BuildConfig
-import ru.seraf1n.moviefinder.data.ApiConstants
-import ru.seraf1n.moviefinder.data.TmdbApi
+import ru.seraf1n.remote_module.entity.ApiConstants
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+
 private const val TIMEOUT = 30L
 @Module
 class RemoteModule {
@@ -23,9 +22,9 @@ class RemoteModule {
         .readTimeout(TIMEOUT, TimeUnit.SECONDS)
         //Добавляем логгер
         .addInterceptor(HttpLoggingInterceptor().apply {
-            if (BuildConfig.DEBUG) {
-                level = HttpLoggingInterceptor.Level.BASIC
-            }
+//            if (BuildConfig.DEBUG) {
+//                level = HttpLoggingInterceptor.Level.BASIC
+//            }
         })
         .build()
 

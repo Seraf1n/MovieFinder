@@ -6,7 +6,8 @@ import dagger.Module
 import dagger.Provides
 import ru.seraf1n.moviefinder.data.MainRepository
 import ru.seraf1n.moviefinder.data.dao.FilmDao
-import ru.seraf1n.moviefinder.data.entity.AppDatabase
+import ru.seraf1n.moviefinder.data.db.AppDatabase
+
 import javax.inject.Singleton
 
 @Module

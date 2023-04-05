@@ -15,4 +15,9 @@ class MainRepository(private val filmDao: FilmDao) {
     }
 
     fun getAllFromDB(): Observable<List<Film>> = filmDao.getCachedFilms()
+
+
+    fun clearDb() {
+        filmDao.clearFilms()
+    }
 }

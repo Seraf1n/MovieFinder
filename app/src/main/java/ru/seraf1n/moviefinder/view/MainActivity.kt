@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.seraf1n.moviefinder.R
-import ru.seraf1n.moviefinder.databinding.ActivityMainBinding
 import ru.seraf1n.moviefinder.data.entity.Film
+import ru.seraf1n.moviefinder.databinding.ActivityMainBinding
 import ru.seraf1n.moviefinder.view.fragments.*
 
 class MainActivity : AppCompatActivity() {
@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
 
         if (!supportFragmentManager.fragments.last().tag.equals("details")) {
@@ -83,7 +84,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initMenuButtons() {
-        topAppBar.setOnMenuItemClickListener {
+        binding.topAppBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.settings -> {
                     Toast.makeText(this, "${it.title}", Toast.LENGTH_SHORT).show()

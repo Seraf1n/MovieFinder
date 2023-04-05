@@ -1,9 +1,11 @@
 package ru.seraf1n.moviefinder.view.customviews
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import ru.seraf1n.moviefinder.R
 import kotlin.math.min
 
@@ -42,6 +44,7 @@ class RatingDonutView @JvmOverloads constructor(
     private lateinit var digitPaint: Paint
     private lateinit var circlePaint: Paint
 
+    private var animator: ValueAnimator? = null
     init {
         //Получаем атрибуты и устанавливаем их в соответствующие поля
         val a =
@@ -137,6 +140,7 @@ class RatingDonutView @JvmOverloads constructor(
         progress = pr
         //Создаем краски с новыми цветами
         initPaint()
+        startAnimation()
         //вызываем перерисовку View
         invalidate()
     }
@@ -156,6 +160,18 @@ class RatingDonutView @JvmOverloads constructor(
         canvas.drawArc(oval, START_ANGLE, convertProgressToDegrees(progress), false, strokePaint)
         //Восстанавливаем канвас
         canvas.restore()
+    }
+    private fun startAnimation() {
+        animator?.cancel()
+        animator = ValueAnimator.ofInt(0, progress).apply {
+            duration = 1500
+            interpolator =  AccelerateDecelerateInterpolator()
+            addUpdateListener {
+                progress = it.animatedValue as Int
+                invalidate()
+            }
+        }
+        animator?.start()
     }
 
     private fun drawText(canvas: Canvas) {
