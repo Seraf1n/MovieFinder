@@ -3,16 +3,16 @@ package ru.seraf1n.moviefinder.di
 import dagger.Component
 import ru.seraf1n.moviefinder.di.modules.DatabaseModule
 import ru.seraf1n.moviefinder.di.modules.DomainModule
-import ru.seraf1n.moviefinder.di.modules.RemoteModule
 import ru.seraf1n.moviefinder.viewmodel.HomeFragmentViewModel
 import ru.seraf1n.moviefinder.viewmodel.SettingsFragmentViewModel
+import ru.seraf1n.remote_module.RemoteProvider
 import javax.inject.Singleton
 
 @Singleton
 @Component(
     //Внедряем все модули, нужные для этого компонента
+    dependencies = [RemoteProvider::class],
     modules = [
-        RemoteModule::class,
         DatabaseModule::class,
         DomainModule::class
     ]

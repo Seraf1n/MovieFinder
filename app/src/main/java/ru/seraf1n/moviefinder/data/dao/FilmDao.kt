@@ -4,7 +4,6 @@ import androidx.room.*
 import io.reactivex.rxjava3.core.Observable
 import ru.seraf1n.moviefinder.data.entity.Film
 
-
 @Dao
 interface FilmDao {
     //Запрос на всю таблицу
@@ -14,4 +13,7 @@ interface FilmDao {
     //Кладём списком в БД, в случае конфликта перезаписываем
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(list: List<Film>)
+
+    @Query("DELETE FROM cached_films")
+    fun clearFilms()
 }

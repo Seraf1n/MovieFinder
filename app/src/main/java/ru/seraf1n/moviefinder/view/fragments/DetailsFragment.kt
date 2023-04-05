@@ -19,13 +19,12 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
-
 import ru.seraf1n.moviefinder.R
-import ru.seraf1n.moviefinder.data.ApiConstants
-import ru.seraf1n.moviefinder.databinding.FragmentDetailsBinding
 import ru.seraf1n.moviefinder.data.entity.Film
+import ru.seraf1n.moviefinder.databinding.FragmentDetailsBinding
 import ru.seraf1n.moviefinder.utils.AnimationHelper
 import ru.seraf1n.moviefinder.viewmodel.DetailsFragmentViewModel
+import ru.seraf1n.remote_module.entity.ApiConstants
 
 
 private const val POSTER_DETAILED = "w780"

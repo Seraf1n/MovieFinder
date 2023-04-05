@@ -4,9 +4,9 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import ru.seraf1n.moviefinder.data.MainRepository
-import ru.seraf1n.moviefinder.data.TmdbApi
 import ru.seraf1n.moviefinder.data.settings.PreferenceProvider
 import ru.seraf1n.moviefinder.domain.Interactor
+import ru.seraf1n.remote_module.TmdbApi
 import javax.inject.Singleton
 
 @Module
