@@ -1,13 +1,41 @@
 <resources>
     <string name="app_name">MovieFinder</string>
-    <string name="movie_posters">Постеры предоставлены https://www.movieposters.com</string>
-    <string name="btn_menu">Меню</string>
     <string name="btn_fav">Избранное</string>
     <string name="btn_watch_later">Посмотреть позже</string>
     <string name="btn_compilation">Подборки</string>
     <string name="btn_setting">Настройки</string>
     <string name="page_title">Search it!</string>
     <string name="btn_dark_mode">Ночной режим</string>
-    <string name="content_description">Poster</string>
+    <string name="Exit_msg">Нажмите дважды для выхода</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mainPage">На главную</string>
+    <string name="Color_0_to_25">#e84258</string>
+    <string name="color_26_to_50">#fd8060</string>
+    <string name="color_51_to_75">#fee191</string>
+    <string name="color_76_above">#b0d8a4</string>
+    <string name="menu_settings_title_text">Настройки</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="radio_button_popular">Популярные</string>
+    <string name="radio_button_top_rated">Рейтинговые</string>
+    <string name="radio_button_upcoming">Премьеры</string>
+    <string name="radio_button_playing">В кинотеатрах</string>
+    <!--  Remove or change this placeholder text -->
+    <string name="permission_storage">Нет разрешения. Пожалуйста, предоставьте разрешение</string>
+    <string name="downloaded_to_gallery">"Сохранено в галерею"</string>
+    <string name="open">В галерею</string>
 
 </resources>
