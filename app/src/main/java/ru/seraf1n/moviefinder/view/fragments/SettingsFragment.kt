@@ -5,9 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-
 import ru.seraf1n.moviefinder.R
 import ru.seraf1n.moviefinder.databinding.FragmentSettingsBinding
 import ru.seraf1n.moviefinder.utils.AnimationHelper

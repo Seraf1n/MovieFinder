@@ -7,10 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.activity_main.*
 import ru.seraf1n.moviefinder.R
-import ru.seraf1n.moviefinder.databinding.ActivityMainBinding
 import ru.seraf1n.moviefinder.data.entity.Film
+import ru.seraf1n.moviefinder.databinding.ActivityMainBinding
 import ru.seraf1n.moviefinder.view.fragments.*
 
 class MainActivity : AppCompatActivity() {
@@ -28,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        bottomSheetBehavior = BottomSheetBehavior.from(bottom_navigation_menu)
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomNavigationMenu as View)
         (bottomSheetBehavior as BottomSheetBehavior).state = BottomSheetBehavior.STATE_HIDDEN
         initCallBacks()
     }
@@ -48,25 +47,26 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    override fun onBackPressed() {
+//    @Deprecated("Deprecated in Java")
+//    override fun onBackPressed() {
+//
+//        if (!supportFragmentManager.fragments.last().tag.equals("details")) {
+//            if (backPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+//
+//                finish()
+//            } else {
+//                Toast.makeText(this, getString(R.string.Exit_msg), Toast.LENGTH_SHORT).show()
+//            }
+//            backPressed = System.currentTimeMillis()
+//        } else {
+//            super.onBackPressed()
+//        }
+//
+//    }
 
-        if (!supportFragmentManager.fragments.last().tag.equals("details")) {
-            if (backPressed + TIME_INTERVAL > System.currentTimeMillis()) {
-
-                finish()
-            } else {
-                Toast.makeText(this, getString(R.string.Exit_msg), Toast.LENGTH_SHORT).show()
-            }
-            backPressed = System.currentTimeMillis()
-        } else {
-            super.onBackPressed()
-        }
-
-    }
-
-    companion object {
-        const val TIME_INTERVAL = 2000
-    }
+//    companion object {
+//        const val TIME_INTERVAL = 2000
+//    }
 
     fun launchDetailsFragment(film: Film) {
         //Создаем "посылку"
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initMenuButtons() {
-        topAppBar.setOnMenuItemClickListener {
+        binding.topAppBar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.settings -> {
                     Toast.makeText(this, "${it.title}", Toast.LENGTH_SHORT).show()

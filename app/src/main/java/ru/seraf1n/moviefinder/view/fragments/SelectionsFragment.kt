@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import ru.seraf1n.moviefinder.utils.AnimationHelper
-
 import ru.seraf1n.moviefinder.databinding.FragmentSelectionsBinding
+import ru.seraf1n.moviefinder.utils.AnimationHelper
 
 class SelectionsFragment : Fragment() {
 

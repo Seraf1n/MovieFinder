@@ -1,4 +1,4 @@
-package ru.seraf1n.moviefinder.data.entity
+package ru.seraf1n.remote_module.entity
 
 import com.google.gson.annotations.SerializedName
 
