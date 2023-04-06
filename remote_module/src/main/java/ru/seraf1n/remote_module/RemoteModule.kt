@@ -22,9 +22,9 @@ class RemoteModule {
         .readTimeout(TIMEOUT, TimeUnit.SECONDS)
         //Добавляем логгер
         .addInterceptor(HttpLoggingInterceptor().apply {
-//            if (BuildConfig.DEBUG) {
-//                level = HttpLoggingInterceptor.Level.BASIC
-//            }
+            if (BuildConfig.DEBUG) {
+                level = HttpLoggingInterceptor.Level.BASIC
+            }
         })
         .build()
 
