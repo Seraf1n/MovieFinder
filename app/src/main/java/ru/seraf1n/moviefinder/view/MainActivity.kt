@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.activity_main.*
 import ru.seraf1n.moviefinder.R
 import ru.seraf1n.moviefinder.data.entity.Film
 import ru.seraf1n.moviefinder.databinding.ActivityMainBinding
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomNavigationMenu as View)
+        bottomSheetBehavior = BottomSheetBehavior.from(bottom_navigation_menu)
         (bottomSheetBehavior as BottomSheetBehavior).state = BottomSheetBehavior.STATE_HIDDEN
         initCallBacks()
     }
@@ -47,26 +48,26 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-//    @Deprecated("Deprecated in Java")
-//    override fun onBackPressed() {
-//
-//        if (!supportFragmentManager.fragments.last().tag.equals("details")) {
-//            if (backPressed + TIME_INTERVAL > System.currentTimeMillis()) {
-//
-//                finish()
-//            } else {
-//                Toast.makeText(this, getString(R.string.Exit_msg), Toast.LENGTH_SHORT).show()
-//            }
-//            backPressed = System.currentTimeMillis()
-//        } else {
-//            super.onBackPressed()
-//        }
-//
-//    }
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
 
-//    companion object {
-//        const val TIME_INTERVAL = 2000
-//    }
+        if (!supportFragmentManager.fragments.last().tag.equals("details")) {
+            if (backPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+
+                finish()
+            } else {
+                Toast.makeText(this, getString(R.string.Exit_msg), Toast.LENGTH_SHORT).show()
+            }
+            backPressed = System.currentTimeMillis()
+        } else {
+            super.onBackPressed()
+        }
+
+    }
+
+    companion object {
+        const val TIME_INTERVAL = 2000
+    }
 
     fun launchDetailsFragment(film: Film) {
         //Создаем "посылку"

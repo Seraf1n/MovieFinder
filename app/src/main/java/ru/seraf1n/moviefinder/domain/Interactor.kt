@@ -1,5 +1,6 @@
 package ru.seraf1n.moviefinder.domain
 
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -35,6 +36,7 @@ class Interactor(
                     repo.putToDb(it)
                 }
             )
+
     }
 
     //Метод для сохранения настроек
@@ -51,4 +53,13 @@ class Interactor(
         .map {
             Converter.convertApiListToDtoList(it.tmdbFilms)
         }
+
+    //метод для очистки списка
+    fun clearListAfterCategoryChange() {
+        Completable.fromSingle<List<Film>> {
+            repo.clearDb()
+        }
+            .subscribeOn(Schedulers.io())
+            .subscribe()
+    }
 }

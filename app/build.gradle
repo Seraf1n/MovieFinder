@@ -1,11 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-parcelize'
+    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
-
-
-
 }
 apply from: "$project.rootDir/versions.gradle"
 
@@ -13,7 +10,6 @@ android {
     compileSdk 33
 
     defaultConfig {
-        //applicationId "ru.seraf1n.moviefinder"
         minSdk 21
         targetSdk 33
         compileSdk 33
@@ -44,9 +40,9 @@ android {
         dataBinding true
     }
 
-//    viewBinding {
-//        enabled = true
-//    }
+    viewBinding {
+        enabled = true
+    }
 
     namespace 'ru.seraf1n.moviefinder'
 }
@@ -98,6 +94,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
+    //Tests
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
