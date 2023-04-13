@@ -1,5 +1,8 @@
 package ru.seraf1n.moviefinder.view
 
+import android.content.BroadcastReceiver
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -11,12 +14,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 import ru.seraf1n.moviefinder.R
 import ru.seraf1n.moviefinder.data.entity.Film
 import ru.seraf1n.moviefinder.databinding.ActivityMainBinding
+import ru.seraf1n.moviefinder.utils.ConnectionChecker
 import ru.seraf1n.moviefinder.view.fragments.*
 
 class MainActivity : AppCompatActivity() {
     private var backPressed = 0L
     private var bottomSheetBehavior: BottomSheetBehavior<View>? = null
     private lateinit var binding: ActivityMainBinding
+    private lateinit var receiver: BroadcastReceiver
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -24,7 +30,20 @@ class MainActivity : AppCompatActivity() {
 
         initMenuButtons()
         changeFragment(HomeFragment(), "home")
+
+        initReceiver()
+
     }
+
+    private fun initReceiver() {
+        receiver = ConnectionChecker()
+        val filters = IntentFilter().apply {
+            addAction(Intent.ACTION_POWER_CONNECTED)
+            addAction(Intent.ACTION_BATTERY_LOW)
+        }
+        registerReceiver(receiver, filters)
+    }
+
 
     override fun onStart() {
         super.onStart()
@@ -161,5 +180,9 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(receiver)
+    }
 }
 
