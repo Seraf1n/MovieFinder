@@ -23,6 +23,7 @@ import ru.seraf1n.moviefinder.R
 import ru.seraf1n.moviefinder.data.entity.Film
 import ru.seraf1n.moviefinder.databinding.FragmentDetailsBinding
 import ru.seraf1n.moviefinder.utils.AnimationHelper
+import ru.seraf1n.moviefinder.view.notifications.NotificationHelper
 import ru.seraf1n.moviefinder.viewmodel.DetailsFragmentViewModel
 import ru.seraf1n.remote_module.entity.ApiConstants
 
@@ -66,6 +67,10 @@ class DetailsFragment : Fragment() {
 
         binding.detailsFabDownloadWp.setOnClickListener {
             performAsyncLoadOfPoster()
+        }
+
+        binding.detailsFabWatchLater.setOnClickListener {
+            NotificationHelper.createNotification(requireContext(), film)
         }
 
         binding.detailsFabFavorites.setOnClickListener {
