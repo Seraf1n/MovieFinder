@@ -15,10 +15,11 @@ import com.bumptech.glide.request.transition.Transition
 import ru.seraf1n.moviefinder.R
 import ru.seraf1n.moviefinder.data.entity.Film
 import ru.seraf1n.moviefinder.view.MainActivity
+import ru.seraf1n.moviefinder.view.notifications.NotificationConstants.POSTER_NOTIFICATION_DETAILED
 import ru.seraf1n.remote_module.entity.ApiConstants
 
 object NotificationHelper {
-    @SuppressLint("MissingPermission")
+    @SuppressLint("MissingPermission", "UnspecifiedImmutableFlag")
     fun createNotification(context: Context, film: Film) {
         val mIntent = Intent(context, MainActivity::class.java)
 
@@ -27,7 +28,7 @@ object NotificationHelper {
 
         val builder = NotificationCompat.Builder(context, NotificationConstants.CHANNEL_ID).apply {
             setSmallIcon(R.drawable.baseline_watch_later_24)
-            setContentTitle("Не забудьте посмотреть!")
+            setContentTitle(context.getString(R.string.DontForgetIt))
             setContentText(film.title)
             priority = NotificationCompat.PRIORITY_DEFAULT
             setContentIntent(pendingIntent)
@@ -42,7 +43,7 @@ object NotificationHelper {
             //говорим, что нужен битмап
             .asBitmap()
             //указываем, откуда загружать, это ссылка, как на загрузку с API
-            .load(ApiConstants.IMAGES_URL + "w500" + film.poster)
+            .load(ApiConstants.IMAGES_URL + POSTER_NOTIFICATION_DETAILED + film.poster)
             .into(object : CustomTarget<Bitmap>() {
                 override fun onLoadCleared(placeholder: Drawable?) {
                 }
