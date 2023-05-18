@@ -3,10 +3,24 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
 }
 apply from: "$project.rootDir/versions.gradle"
 
 android {
+    flavorDimensions "version"
+    productFlavors {
+        basic {
+            dimension "version"
+            applicationIdSuffix ".basic"
+            versionNameSuffix "-basic"
+        }
+        pro {
+            dimension "version"
+            applicationIdSuffix ".pro"
+            versionNameSuffix "-pro"
+        }
+    }
     compileSdk 33
 
     defaultConfig {
@@ -45,6 +59,18 @@ android {
     }
 
     namespace 'ru.seraf1n.moviefinder'
+    sourceSets {
+        basic {
+            java {
+                srcDirs 'src\\basic\\java'
+            }
+        }
+        pro {
+            java {
+                srcDirs 'src\\pro\\java'
+            }
+        }
+    }
 }
 
 dependencies {
@@ -61,6 +87,7 @@ dependencies {
 
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.15.1'
+    implementation 'com.google.firebase:firebase-database-ktx:20.2.1'
     kapt 'com.github.bumptech.glide:compiler:4.15.1'
 
     //Room
