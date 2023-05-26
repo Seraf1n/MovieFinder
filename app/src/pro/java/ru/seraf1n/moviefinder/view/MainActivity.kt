@@ -10,12 +10,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import kotlinx.android.synthetic.main.activity_main.*
+import ru.seraf1n.moviefinder.App
 import ru.seraf1n.moviefinder.R
 import ru.seraf1n.moviefinder.data.entity.Film
 import ru.seraf1n.moviefinder.databinding.ActivityMainBinding
 import ru.seraf1n.moviefinder.utils.ConnectionChecker
 import ru.seraf1n.moviefinder.view.fragments.*
+
+private const val ANIM_DURATION = 1500L
+
+private const val ALPHA_CHANEL = 1f
 
 class MainActivity : AppCompatActivity() {
     private var backPressed = 0L
@@ -33,7 +40,55 @@ class MainActivity : AppCompatActivity() {
 
         initReceiver()
 
+        initPromo()
+
     }
+
+    private fun initPromo() {
+        if (!App.instance.isPromoShown) {
+            //Получаем доступ к Remote Config
+            val firebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+            //Устанавливаем настройки
+            val configSettings = FirebaseRemoteConfigSettings.Builder()
+                .setMinimumFetchIntervalInSeconds(0)
+                .build()
+            firebaseRemoteConfig.setConfigSettingsAsync(configSettings)
+            //Вызываем метод, который получит данные с сервера и вешаем слушатель
+            firebaseRemoteConfig.fetch()
+                .addOnCompleteListener {
+                    //Если все получилось успешно
+                    if (it.isSuccessful) {
+                        //активируем последний полученный конфиг с сервера
+                        firebaseRemoteConfig.activate()
+                        //Получаем ссылку
+                        val filmLink = firebaseRemoteConfig.getString("film_link")
+                        //Если поле не пустое
+                        if (filmLink.isNotBlank
+                                ()) {
+                            //Ставим флаг, что уже промо показали
+                            App.instance.isPromoShown = true
+                            //Включаем промо верстку
+                            binding.promoViewGroup.apply {
+                                //Делаем видимой
+                                visibility = View.VISIBLE
+                                //Анимируем появление
+                                animate()
+                                    .setDuration(ANIM_DURATION)
+                                    .alpha(ALPHA_CHANEL)
+                                    .start()
+                                //Вызываем метод, который загрузит постер в ImageView
+                                setLinkForPoster(filmLink)
+                                //Кнопка, по нажатии на которую промо уберется (желательно сделать отдельную кнопку с крестиком)
+                                watchButton.setOnClickListener {
+                                    visibility = View.GONE
+                                }
+                            }
+                        }
+                    }
+                }
+        }
+    }
+
 
     private fun initReceiver() {
         receiver = ConnectionChecker()

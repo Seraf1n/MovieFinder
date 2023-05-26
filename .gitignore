@@ -20,3 +20,4 @@
 /build/
 /.gradle/
 /app/libs/
+/app/google-services.json
